@@ -167,7 +167,9 @@ fun showImgDialog(image: Bitmap, fileName: String) {
             }
         }
         setPositiveButton("分享图片") {
-            shareBitmap(image)
+           appScope.launch(Dispatchers.IO) {
+               shareBitmap(image)
+           }
         }
         setNegativeButton("保存图片") {
             saveBitmapToStorage(image, fileName)
