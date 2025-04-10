@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "364410244209",
+    "project_id": "miximage-5e3ed",
+    "storage_bucket": "miximage-5e3ed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364410244209:android:098d9b87ad9e9931875fd0",
+        "android_client_info": {
+          "package_name": "com.donut.MixImage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQXbrdalZu6JSH_btYoitcBStHzQeyzVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364410244209:android:03648712b130397e875fd0",
+        "android_client_info": {
+          "package_name": "com.donut.miximage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQXbrdalZu6JSH_btYoitcBStHzQeyzVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

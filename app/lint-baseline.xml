@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.7.3" type="baseline" client="gradle" dependencies="false" name="AGP (8.7.3)" variant="fatal" version="8.7.3">
+
+    <issue
+        id="InvalidFragmentVersionForActivityResult"
+        message="Upgrade Fragment version to at least 1.3.0."
+        errorLine1="            activity.registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/donut/miximage/utils/objects/MixFileSelector.kt"
+            line="15"
+            column="13"/>
+    </issue>
+
+</issues>
