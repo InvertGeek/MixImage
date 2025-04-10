@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -35,6 +36,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.donut.mixfile.util.showToast
 import com.donut.miximage.MainActivity.Companion.mixFileSelector
+import com.donut.miximage.R
 import com.donut.miximage.app
 import com.donut.miximage.appScope
 import com.donut.miximage.currentActivity
@@ -66,7 +68,7 @@ fun Home() {
                     .fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 Text(
-                    text = "魔图",
+                    text = stringResource(R.string.app_name),
                     fontSize = 20.sp,
                     modifier = Modifier.padding(10.dp)
                 )
