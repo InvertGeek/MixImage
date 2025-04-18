@@ -3,16 +3,18 @@ package com.donut.miximage
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.donut.miximage.ui.Home
 import com.donut.miximage.ui.openImg
 import com.donut.miximage.utils.objects.MixActivity
 import com.donut.miximage.utils.objects.MixFileSelector
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : MixActivity("main") {
+
     companion object {
         lateinit var mixFileSelector: MixFileSelector
 
@@ -31,7 +33,9 @@ class MainActivity : MixActivity("main") {
         setContent {
             Home()
         }
-        Handler(mainLooper).postDelayed(::handleIntent, 100)
+        appScope.launch(Dispatchers.Main) {
+            handleIntent()
+        }
     }
 
     override fun onNewIntent(intent: Intent) {

@@ -56,6 +56,19 @@ fun readClipBoardText(): String {
     return ""
 }
 
+fun String.sanitizeFileName(): String {
+    // 定义非法字符的正则表达式
+    val illegalChars = "[/\\\\:*?\"<>|]".toRegex()
+
+
+    return this
+        .replace(illegalChars, " ")
+        .trim()
+        .replace("\\s+".toRegex(), "_")
+        .takeLast(255)
+        .ifEmpty { "unnamed_file" }
+}
+
 fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
     // 检查外部存储是否可用
 
@@ -73,7 +86,7 @@ fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
             MediaStore.Images.Media.insertImage(
                 app.contentResolver,
                 file.absolutePath,
-                fileName,
+                fileName.sanitizeFileName(),
                 null
             )
         }

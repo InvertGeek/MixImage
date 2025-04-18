@@ -14,11 +14,13 @@ import coil.decode.VideoFrameDecoder
 import com.donut.miximage.utils.compose.showErrorDialog
 import com.donut.miximage.utils.objects.MixActivity
 import com.donut.miximage.utils.showError
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 
 
-val appScope by lazy { MainScope() }
+val appScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
 
 private lateinit var innerApp: Application

@@ -1,9 +1,12 @@
 package com.example.imagescrambler
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
+import android.graphics.Rect
 import androidx.core.graphics.createBitmap
-import androidx.core.graphics.get
-import androidx.core.graphics.set
 import com.donut.miximage.utils.objects.ProgressContent
 import kotlin.math.abs
 
@@ -71,6 +74,9 @@ object ImageScrambler {
         val blocksX = width / blockSize
         val blocksY = height / blockSize
 
+        // 创建 Canvas 用于绘制到 output Bitmap
+        val canvas = Canvas(output)
+
         // 生成并打乱块位置
         val positions = generateBlockPositions(blocksX, blocksY)
         val shuffledPositions = shuffleList(positions, SEED)
@@ -86,17 +92,47 @@ object ImageScrambler {
             val destX = destPos.first * blockSize
             val destY = destPos.second * blockSize
 
-            // 复制并处理像素
-            for (y in 0 until blockSize) {
-                for (x in 0 until blockSize) {
-                    if (srcX + x < width && srcY + y < height && destX + x < width && destY + y < height) {
-                        val pixel = input[srcX + x, srcY + y]
-                        val processedPixel = invertColor(pixel) // 可根据需求切换为 obfuscatePixel
-                        output[destX + x, destY + y] = processedPixel
-                    }
-                }
+            // 定义源和目标区域
+            val srcRect = Rect(srcX, srcY, srcX + blockSize, srcY + blockSize)
+            val destRect = Rect(destX, destY, destX + blockSize, destY + blockSize)
+
+            // 确保区域在 Bitmap 范围内
+            if (srcRect.right <= width && srcRect.bottom <= height &&
+                destRect.right <= width && destRect.bottom <= height
+            ) {
+                // 使用 Canvas 绘制源区域到目标区域
+                canvas.drawBitmap(input, srcRect, destRect, null)
+                canvas.drawBitmap(input, srcRect, Rect(0, 0, blockSize, blockSize), null)
             }
         }
+    }
+
+    fun Bitmap.invertColors(): Bitmap {
+        val bitmap = this
+        // 创建输出 Bitmap
+        val invertedBitmap = createBitmap(bitmap.width, bitmap.height, bitmap.config!!)
+
+        // 设置 Canvas 和 Paint
+        val canvas = Canvas(invertedBitmap)
+        val paint = Paint()
+
+        // 创建颜色反转的 ColorMatrix
+        val colorMatrix = ColorMatrix(
+            floatArrayOf(
+                -1f, 0f, 0f, 0f, 255f, // 反转红色
+                0f, -1f, 0f, 0f, 255f, // 反转绿色
+                0f, 0f, -1f, 0f, 255f, // 反转蓝色
+                0f, 0f, 0f, 1f, 0f      // 保留 Alpha
+            )
+        )
+
+        // 应用 ColorMatrix
+        paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
+
+        // 绘制反转后的图像
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+
+        return invertedBitmap
     }
 
     /**
@@ -108,7 +144,7 @@ object ImageScrambler {
         val output = createBitmap(input.width, input.height)
         val blockSize = calculateBlockSize(input.width, input.height)
         processImage(input, output, blockSize, isScramble = true, progress)
-        return output
+        return output.invertColors()
     }
 
     /**
@@ -120,6 +156,6 @@ object ImageScrambler {
         val output = createBitmap(input.width, input.height)
         val blockSize = calculateBlockSize(input.width, input.height)
         processImage(input, output, blockSize, isScramble = false, progress)
-        return output
+        return output.invertColors()
     }
 }
