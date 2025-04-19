@@ -96,14 +96,8 @@ object ImageScrambler {
             val srcRect = Rect(srcX, srcY, srcX + blockSize, srcY + blockSize)
             val destRect = Rect(destX, destY, destX + blockSize, destY + blockSize)
 
-            // 确保区域在 Bitmap 范围内
-            if (srcRect.right <= width && srcRect.bottom <= height &&
-                destRect.right <= width && destRect.bottom <= height
-            ) {
-                // 使用 Canvas 绘制源区域到目标区域
-                canvas.drawBitmap(input, srcRect, destRect, null)
-                canvas.drawBitmap(input, srcRect, Rect(0, 0, blockSize, blockSize), null)
-            }
+            canvas.drawBitmap(input, srcRect, destRect, null)
+
         }
     }
 
