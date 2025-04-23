@@ -1,4 +1,4 @@
-package com.example.imagescrambler
+package com.donut.miximage.utils
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

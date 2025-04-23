@@ -34,7 +34,7 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.donut.mixfile.util.showToast
+import com.donut.miximage.utils.showToast
 import com.donut.miximage.MainActivity.Companion.mixFileSelector
 import com.donut.miximage.R
 import com.donut.miximage.app
@@ -47,7 +47,7 @@ import com.donut.miximage.utils.compose.common.MixDialogBuilder
 import com.donut.miximage.utils.getFileName
 import com.donut.miximage.utils.objects.ProgressContent
 import com.donut.miximage.utils.saveBitmapToStorage
-import com.example.imagescrambler.ImageScrambler
+import com.donut.miximage.utils.ImageScrambler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
