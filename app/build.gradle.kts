@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -17,8 +19,8 @@ android {
         applicationId = "com.donut.miximage"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,7 +40,7 @@ android {
     applicationVariants.all {
         val variant = this
         variant.outputs
-            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .map { it as BaseVariantOutputImpl }
             .forEach { output ->
                 val outputFileName =
                     "MixImage-${variant.baseName}-${variant.versionName}.apk"
