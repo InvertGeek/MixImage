@@ -3,6 +3,7 @@ package com.donut.miximage.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -18,10 +19,7 @@ import com.donut.miximage.utils.compose.showErrorDialog
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okio.IOException
 import java.io.EOFException
-import java.io.File
-import java.io.FileOutputStream
 import java.math.BigInteger
 import java.net.Inet4Address
 import java.net.NetworkInterface
@@ -83,32 +81,22 @@ fun String.sanitizeFileName(): String {
 }
 
 fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
-    // 检查外部存储是否可用
+    val directory = Environment.DIRECTORY_PICTURES
 
-
-    // 获取 Pictures 目录并创建文件
-    val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val file = File(directory, "$fileName.jpg")
-
-    try {
-        FileOutputStream(file).use { fos ->
-            // 将 Bitmap 压缩为 JPEG 格式并写入文件
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-            fos.flush()
-            // 通知媒体库更新
-            MediaStore.Images.Media.insertImage(
-                app.contentResolver,
-                file.absolutePath,
-                fileName.sanitizeFileName(),
-                null
-            )
-        }
-    } catch (e: IOException) {
-        e.printStackTrace()
-
+    val resolver = app.contentResolver
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, "$fileName.jpg".sanitizeFileName())
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, directory)
     }
-}
+    val fileUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+    fileUri?.let { uri ->
+        resolver.openOutputStream(uri)?.use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+    }
 
+}
 
 fun formatFileSize(bytes: Long, mb: Boolean = false): String {
     if (bytes <= 0) return "0 B"

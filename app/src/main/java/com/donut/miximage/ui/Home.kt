@@ -34,7 +34,6 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.donut.miximage.utils.showToast
 import com.donut.miximage.MainActivity.Companion.mixFileSelector
 import com.donut.miximage.R
 import com.donut.miximage.app
@@ -42,12 +41,13 @@ import com.donut.miximage.appScope
 import com.donut.miximage.currentActivity
 import com.donut.miximage.ui.theme.MainTheme
 import com.donut.miximage.ui.theme.colorScheme
+import com.donut.miximage.utils.ImageScrambler
 import com.donut.miximage.utils.compose.UseEffect
 import com.donut.miximage.utils.compose.common.MixDialogBuilder
 import com.donut.miximage.utils.getFileName
 import com.donut.miximage.utils.objects.ProgressContent
 import com.donut.miximage.utils.saveBitmapToStorage
-import com.donut.miximage.utils.ImageScrambler
+import com.donut.miximage.utils.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -207,7 +207,7 @@ private fun processImage(
             UseEffect {
                 val stream = app.contentResolver.openInputStream(imageUri)
                 val image = stream.use { BitmapFactory.decodeStream(it) }
-                val fileName = "${imageUri.getFileName()}$fileNameSuffix"
+                val fileName = "${imageUri.getFileName().substringBeforeLast(".")}$fileNameSuffix"
                 val processedImage = when (operation) {
                     ImageOperation.ENCODE -> ImageScrambler.scrambleImage(image, progress)
                     ImageOperation.DECODE -> ImageScrambler.unscrambleImage(image, progress)
