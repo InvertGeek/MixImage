@@ -67,18 +67,19 @@ fun String.sanitizeFileName(): String {
     var sanitized = this
         // 替换非法字符为下划线
         .replace(illegalChars, "_")
-        // 移除路径遍历序列
-        .replace("..", "_")
         .trim()
 
-    // 检查是否为 Windows 保留文件名
-    val baseName = sanitized.substringBeforeLast(".").uppercase()
-    if (baseName in reservedNames) {
+    if (sanitized.all { it == '.' }) {
+        sanitized = "unnamed_file"
+    }
+
+    if (sanitized.uppercase() in reservedNames) {
         sanitized = "_$sanitized"
     }
 
     return sanitized.takeLast(255).ifEmpty { "unnamed_file" }
 }
+
 
 fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
     val directory = Environment.DIRECTORY_PICTURES
@@ -133,16 +134,16 @@ fun getAppVersion(context: Context): Pair<String, Long> {
 
 
 class CachedDelegate<T>(val getKeys: () -> Array<Any?>, private val initializer: () -> T) {
-    private var cache: T? = null
-    private var keys: Array<Any?> = arrayOf()
+    private var cache: T = initializer()
+    private var keys: Array<Any?> = getKeys()
 
     operator fun getValue(thisRef: Any?, property: Any?): T {
         val newKeys = getKeys()
-        if (cache == null || !keys.contentEquals(newKeys)) {
+        if (!keys.contentEquals(newKeys)) {
             keys = newKeys
             cache = initializer()
         }
-        return cache!!
+        return cache
     }
 
     operator fun setValue(thisRef: Any?, property: Any?, value: T) {
