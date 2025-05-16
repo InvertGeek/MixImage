@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import coil.compose.SubcomposeAsyncImage
@@ -194,7 +193,7 @@ private fun processImage(
 ) {
     MixDialogBuilder(
         dialogTitle,
-        properties = DialogProperties(dismissOnClickOutside = false)
+        autoClose = false
     ).apply {
         setContent {
             val progress = remember { ProgressContent(dialogTitle) }

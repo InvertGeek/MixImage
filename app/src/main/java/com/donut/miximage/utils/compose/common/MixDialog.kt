@@ -26,8 +26,10 @@ class MixDialogBuilder(
     private var title: String,
     private val subtitle: String = "",
     private val tag: String = title,
+    autoClose: Boolean = true,
     private val properties: DialogProperties = DialogProperties(
-//        usePlatformDefaultWidth = false
+        dismissOnBackPress = autoClose,
+        dismissOnClickOutside = autoClose
     ),
     private val containerColor: Color? = null,
     private val iconContentColor: Color? = null,
