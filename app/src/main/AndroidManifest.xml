@@ -26,7 +26,6 @@
             android:name=".MainActivity"
             android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.MixImage">
             <intent-filter>

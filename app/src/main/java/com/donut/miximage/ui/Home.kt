@@ -41,7 +41,7 @@ import com.donut.miximage.currentActivity
 import com.donut.miximage.ui.theme.MainTheme
 import com.donut.miximage.ui.theme.colorScheme
 import com.donut.miximage.utils.ImageScrambler
-import com.donut.miximage.utils.compose.UseEffect
+import com.donut.miximage.utils.compose.AsyncEffect
 import com.donut.miximage.utils.compose.common.MixDialogBuilder
 import com.donut.miximage.utils.getFileName
 import com.donut.miximage.utils.objects.ProgressContent
@@ -203,7 +203,7 @@ private fun processImage(
             ) {
                 progress.LoadingContent()
             }
-            UseEffect {
+            AsyncEffect {
                 val stream = app.contentResolver.openInputStream(imageUri)
                 val image = stream.use { BitmapFactory.decodeStream(it) }
                 val fileName = "${imageUri.getFileName().substringBeforeLast(".")}$fileNameSuffix"

@@ -48,6 +48,7 @@ import com.donut.miximage.utils.objects.MixActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 fun addContentView(view: View): () -> Unit {
@@ -148,22 +149,21 @@ fun OnResume(block: () -> Unit) {
 
 @Composable
 @NonRestartableComposable
-fun UseEffect(
+fun AsyncEffect(
     vararg keys: Any?,
     block: suspend CoroutineScope.() -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
     LaunchedEffect(*keys) {
-        scope.launch(Dispatchers.IO, block = block)
+        withContext(Dispatchers.IO, block)
     }
 }
 
 @Composable
 @NonRestartableComposable
-fun UseEffect(
+fun AsyncEffect(
     block: suspend CoroutineScope.() -> Unit,
 ) {
-    UseEffect(Unit, block = block)
+    AsyncEffect(Unit, block = block)
 }
 
 @Composable
