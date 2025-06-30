@@ -94,7 +94,7 @@ fun Home() {
                                         "https://github.com/invertgeek/MixImage".toUri()
                                     )
                                     closeDialog()
-                                    currentActivity.startActivity(intent)
+                                    currentActivity?.startActivity(intent)
                                 }
                                 show()
                             }
@@ -259,7 +259,7 @@ fun selectImgAndEncrypt() {
 
 fun shareBitmap(bitmap: Bitmap, shareTitle: String = "分享图片", fileName: String = shareTitle) {
     try {
-        val context = currentActivity
+        val context = app
         // 1. 将 Bitmap 保存到缓存目录
         val cachePath = File(context.cacheDir, "images")
         cachePath.mkdirs()
