@@ -1,15 +1,15 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.compose.compiler)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.donut.miximage"
-    compileSdk = 35
+    compileSdk = 36
 
     lint {
         baseline = file("lint-baseline.xml")
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.donut.miximage"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 9
         versionName = "1.0.8"
 
@@ -26,7 +26,6 @@ android {
     }
 
     buildTypes {
-
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -37,6 +36,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
     applicationVariants.all {
         val variant = this
         variant.outputs
@@ -61,26 +61,28 @@ android {
 }
 
 dependencies {
-    implementation(libs.zoomable)
-    implementation(libs.coil)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
-    implementation(libs.coil.svg)
-    implementation(libs.coil.video)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.firebase.analytics)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("net.engawapg.lib:zoomable:1.6.1")
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-gif:2.6.0")
+    implementation("io.coil-kt:coil-svg:2.6.0")
+    implementation("io.coil-kt:coil-video:2.6.0")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation("com.google.firebase:firebase-analytics:22.4.0")
+    implementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
