@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +40,6 @@ import com.donut.miximage.app
 import com.donut.miximage.appScope
 import com.donut.miximage.currentActivity
 import com.donut.miximage.ui.theme.MainTheme
-import com.donut.miximage.ui.theme.colorScheme
 import com.donut.miximage.utils.ImageScrambler
 import com.donut.miximage.utils.compose.AsyncEffect
 import com.donut.miximage.utils.compose.common.MixDialogBuilder
